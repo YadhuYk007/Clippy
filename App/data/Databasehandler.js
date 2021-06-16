@@ -46,16 +46,17 @@ export const getCollections = ({db}) => {
 
 export const addClip = async ({db}, cId, url, title, image) => {
   //console.log('title>>', result.title, 'image>>', result.favicons[0]);
+  const preview = title.slice(0, 15);
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
-        'create table if not exists clips (id integer primary key autoincrement, collectionid text,url text,imgurl text,header text,read text);',
+        'create table if not exists clips (id integer primary key autoincrement, collectionid text,url text,imgurl text,header text,read text,preview text);',
         null,
         null,
       );
       tx.executeSql(
-        'insert into clips (collectionid,url,read,header,imgurl) values (?,?,?,?,?)',
-        [cId, url, 0, title, image],
+        'insert into clips (collectionid,url,read,header,imgurl,preview) values (?,?,?,?,?,?)',
+        [cId, url, 0, title, image, preview],
         (_, results) => {
           console.log(JSON.stringify(results));
           if (results.rowsAffected > 0) {

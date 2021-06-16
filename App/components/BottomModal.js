@@ -5,7 +5,7 @@ const BottomModal = ({bottomModal, clip, collection}) => {
   return (
     <Modal visible={bottomModal} transparent={true} animationType={'slide'}>
       <View style={Style.bottomCenter} onPress={() => setBottomModal(false)}>
-        <Text style={Style.bottomTextClip} onPress={clip}>
+        <Text style={Style.bottomTextCollection} onPress={clip}>
           Create a clip
         </Text>
 
@@ -25,12 +25,7 @@ const Style = StyleSheet.create({
     position: 'absolute', //Here is the trick
     bottom: 0, //Here is the trick
   },
-  bottomTextClip: {
-    paddingVertical: 20,
-    color: color.Accent,
-    fontSize: 16,
-    fontFamily: 'IBMPlexSerif-Italic',
-  },
+
   bottomTextCollection: {
     paddingVertical: 20,
     color: color.Black,

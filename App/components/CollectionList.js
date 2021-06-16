@@ -12,49 +12,30 @@ const CollectionList = ({addClip, modal}) => {
 
   useEffect(() => {
     db.transaction(tx => {
-      tx.executeSql('SELECT * FROM collections', [], (tx, results) => {
-        var temp = [];
-        for (let i = 0; i < results.rows.length; ++i)
-          temp.push(results.rows.item(i));
-        setItems(temp);
-      });
-    });
-  }, [modal]);
-
-  const clearText = () => {
-    setText('No');
-  };
-
-  const initChild = id => {
-    console.log(id);
-    db.transaction(tx => {
       tx.executeSql(
-        'SELECT * FROM clips where collectionid=?',
-        [id],
+        'create table if not exists collections (id integer primary key autoincrement, name text);',
+        null,
+        null,
+      );
+      tx.executeSql(
+        'create table if not exists clips (id integer primary key autoincrement, collectionid text,url text,imgurl text,header text,read text,preview text);',
+        null,
+        null,
+      );
+      tx.executeSql(
+        'SELECT c.id as id,c.name as name,GROUP_CONCAT(cp.preview) AS clips FROM collections c left join clips cp on c.id=cp.collectionid group by c.id',
+        [],
         (tx, results) => {
-          //console.log('LENGTH>>>>>', results.rows.length);
-          if (results.rows.length > 0) {
-            if (results.rows.length === 1) {
-              title = results.rows.item(0).header;
-            } else {
-              let temp = results.rows.item(0).header;
-              title = temp.slice(0, 20);
-              let temp1 = results.rows.item(1).header;
-              title = title + ',' + temp1.slice(0, 20);
-              let temp2 = results.rows.item(2).header;
-              title = title + ',' + temp2.slice(0, 20);
-            }
-          }
-          // if (results.rows.length === 0) {
-          //   text = 'No Clips!';
-          // }
-          setText(title);
+          var temp = [];
+          for (let i = 0; i < results.rows.length; ++i)
+            temp.push(results.rows.item(i));
+          setItems(temp);
+          //console.log(items);
         },
       );
     });
+  }, [modal, items]);
 
-    return <Text style={Style.details}>{text}</Text>;
-  };
   return (
     <View style={Style.list}>
       <FlatList
@@ -62,7 +43,9 @@ const CollectionList = ({addClip, modal}) => {
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => addClip(item.id)}>
             <Text style={Style.item}>{item.name}</Text>
-            <View style={Style.details}>{initChild(item.id)}</View>
+            <Text style={Style.details}>
+              {item.clips == null ? 'No Clips!' : item.clips}
+            </Text>
           </TouchableOpacity>
         )}
         keyExtractor={item => item.id}
@@ -93,7 +76,7 @@ const Style = StyleSheet.create({
   details: {
     fontFamily: 'IBMPlexSerif-Italic',
     fontSize: 11,
-    marginLeft: 10,
+    marginLeft: 20,
   },
   emptyView: {
     alignSelf: 'center',

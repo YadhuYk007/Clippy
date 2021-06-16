@@ -66,12 +66,6 @@ const CollectionDetails = ({navigation}) => {
     });
   };
 
-  // const editClip = () => {
-  //   return (
-
-  //   );
-  // };
-
   const setOptionsModalVisible = () => {
     setOptionsModal(true);
   };
@@ -88,7 +82,7 @@ const CollectionDetails = ({navigation}) => {
             }}
             onLongPress={() => {
               setCurrentUrl(item.url);
-              //openUrl(item.url);
+
               setOptionsModalVisible();
               setCurrentItem(item.id);
             }}>
@@ -129,7 +123,6 @@ const CollectionDetails = ({navigation}) => {
             }}
             onLongPress={() => {
               setCurrentUrl(item.url);
-              //openUrl();
               setOptionsModalVisible();
               setCurrentItem(item.id);
             }}>
@@ -246,6 +239,8 @@ const Style = StyleSheet.create({
   headerText: {
     alignSelf: 'center',
     fontFamily: 'IBMPlexSerif-Italic',
+    color: color.Grey,
+    fontSize: 16,
   },
 });
 

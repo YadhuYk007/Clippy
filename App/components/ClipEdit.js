@@ -32,7 +32,7 @@ const ClipEdit = ({clipModalVisible, visible, clipId, clipUrl, collection}) => {
         setItems(temp);
       });
     });
-
+    setUrl(clipUrl);
     setDropdown(
       items.map((collection, index) => {
         return {value: collection.id, label: collection.name};
@@ -83,6 +83,9 @@ const ClipEdit = ({clipModalVisible, visible, clipId, clipUrl, collection}) => {
                 bottomOffset={100}
                 placeholder="Choose collection"
                 placeholderStyle={{
+                  fontFamily: 'IBMPlexSerif-Italic',
+                }}
+                textStyle={{
                   fontFamily: 'IBMPlexSerif-Italic',
                 }}
                 open={open}
