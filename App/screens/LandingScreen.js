@@ -14,6 +14,7 @@ import CollectionList from '../components/CollectionList';
 import CollectionDialog from '../components/CollectionDialog';
 import ClipDialog from '../components/ClipDialog';
 import BottomModal from '../components/BottomModal';
+import SplashScreen from 'react-native-splash-screen';
 
 const LandingScreen = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,6 +27,7 @@ const LandingScreen = ({navigation}) => {
     items.length > 0 ? setBottomModal(true) : setModalVisible(true);
   };
   useEffect(() => {
+    SplashScreen.hide();
     db.transaction(tx => {
       tx.executeSql('SELECT * FROM collections', [], (tx, results) => {
         var temp = [];
@@ -34,7 +36,7 @@ const LandingScreen = ({navigation}) => {
         setItems(temp);
       });
     });
-  }, [modalVisible]);
+  }, [modalVisible, navigation]);
   return (
     <SafeAreaView style={Style.container}>
       <StatusBar backgroundColor={color.Primary} />

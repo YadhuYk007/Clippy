@@ -81,6 +81,9 @@ const ClipDialog = ({clipModalVisible, onCancel, visible, modal}) => {
                 placeholderStyle={{
                   fontFamily: 'IBMPlexSerif-Italic',
                 }}
+                textStyle={{
+                  fontFamily: 'IBMPlexSerif-Italic',
+                }}
                 open={open}
                 value={value}
                 setOpen={setOpen}

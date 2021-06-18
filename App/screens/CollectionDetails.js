@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
-import {useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
+
 import {
   Text,
   View,
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Modal,
   Image,
   Linking,
+  Alert,
 } from 'react-native';
 import {openDatabase} from 'react-native-sqlite-storage';
 import Separator from '../components/Separator';
@@ -18,10 +18,12 @@ import ClipDialog from '../components/ClipDialog';
 import CollectionDialog from '../components/CollectionDialog';
 import ClipOptionsModal from '../components/ClipOptionsModal';
 import ClipEdit from '../components/ClipEdit';
+import NavHeader from '../components/NavHeader';
+import {deleteCollection} from '../data/Databasehandler';
 
-const CollectionDetails = ({navigation}) => {
+const CollectionDetails = ({route, navigation}) => {
   const [bottomModal, setBottomModal] = useState(false);
-  const [id, setId] = useState(navigation.state.params.id);
+  const [id, setId] = useState(route.params.id);
   const [items, setItems] = useState(null);
   const [readItems, setReadItems] = useState(null);
   const [currentItem, setCurrentItem] = useState(null);
@@ -58,7 +60,43 @@ const CollectionDetails = ({navigation}) => {
         },
       );
     });
-  }, [clipModalVisible, optionsModal, editClip]);
+  }, [editClip, optionsModal, clipModalVisible]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <NavHeader
+          onEditClick={() => {
+            onCollectionEdit();
+          }}
+          onDeleteClick={() => {
+            onCollectionDelete();
+          }}
+        />
+      ),
+    });
+  }, [navigation]);
+
+  const onCollectionEdit = () => {
+    return null;
+  };
+
+  const onCollectionDelete = () => {
+    Alert.alert('Delete Item', 'Are you sure you want to delete this item?', [
+      {
+        text: 'No',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => {
+          deleteCollection({db}, id);
+          navigation.navigate('Collections');
+        },
+      },
+    ]);
+  };
 
   const openUrl = url => {
     Linking.canOpenURL(url).then(supported => {

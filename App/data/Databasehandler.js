@@ -84,6 +84,31 @@ export const deleteItem = ({db}, id) => {
   });
 };
 
+export const deleteCollection = ({db}, id) => {
+  db.transaction(tx => {
+    tx.executeSql('DELETE FROM  collections where id=?', [id], (_, results) => {
+      console.log('Results', results.rowsAffected);
+      if (results.rowsAffected > 0) {
+        console.log('Deleted');
+      } else {
+        console.log('error while deleting');
+      }
+    });
+    tx.executeSql(
+      'DELETE FROM  clips where collectionid=?',
+      [id],
+      (_, results) => {
+        console.log('Results', results.rowsAffected);
+        if (results.rowsAffected > 0) {
+          console.log('Deleted');
+        } else {
+          console.log('error while deleting');
+        }
+      },
+    );
+  });
+};
+
 export const setReadFlag = ({db}, id) => {
   db.transaction(tx => {
     tx.executeSql(
