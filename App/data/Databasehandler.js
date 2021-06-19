@@ -1,8 +1,4 @@
-import {getLinkPreview, getPreviewFromContent} from 'link-preview-js';
-import {ToastAndroid} from 'react-native';
-
 export const createCollection = ({db}, collectionName) => {
-  //console.log(collectionName);
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
@@ -45,7 +41,6 @@ export const getCollections = ({db}) => {
 };
 
 export const addClip = async ({db}, cId, url, title, image) => {
-  //console.log('title>>', result.title, 'image>>', result.favicons[0]);
   const preview = title.slice(0, 15);
   const promise = new Promise((resolve, reject) => {
     db.transaction(tx => {
@@ -114,6 +109,22 @@ export const setReadFlag = ({db}, id) => {
     tx.executeSql(
       'UPDATE clips set read=? where id=?',
       [1, id],
+      (_, results) => {
+        console.log('Results', results.rowsAffected);
+        if (results.rowsAffected > 0) {
+          console.log('Updated');
+        } else console.log('Updation Failed');
+      },
+    );
+  });
+};
+
+export const updateCollection = ({db}, id, name) => {
+  console.log(id, name);
+  db.transaction(tx => {
+    tx.executeSql(
+      'UPDATE collections set name=? where id=?',
+      [name, id],
       (_, results) => {
         console.log('Results', results.rowsAffected);
         if (results.rowsAffected > 0) {

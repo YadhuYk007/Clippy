@@ -22,8 +22,8 @@ const Style = StyleSheet.create({
     backgroundColor: color.White,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute', //Here is the trick
-    bottom: 0, //Here is the trick
+    position: 'absolute',
+    bottom: 0,
   },
 
   bottomTextCollection: {

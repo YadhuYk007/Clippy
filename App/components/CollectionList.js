@@ -3,10 +3,8 @@ import {FlatList, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Separator from '../components/Separator';
 import {openDatabase} from 'react-native-sqlite-storage';
 import color from '../constants/Colors';
-import SubData from './SubData';
 const CollectionList = ({addClip, modal}) => {
   const [items, setItems] = useState([]);
-  const [text, setText] = useState(null);
   let title = 'No Clips!';
   var db = openDatabase({name: 'clippyData.db'});
 
@@ -30,7 +28,6 @@ const CollectionList = ({addClip, modal}) => {
           for (let i = 0; i < results.rows.length; ++i)
             temp.push(results.rows.item(i));
           setItems(temp);
-          //console.log(items);
         },
       );
     });
@@ -41,7 +38,7 @@ const CollectionList = ({addClip, modal}) => {
       <FlatList
         data={items}
         renderItem={({item}) => (
-          <TouchableOpacity onPress={() => addClip(item.id)}>
+          <TouchableOpacity onPress={() => addClip(item.id, item.name)}>
             <Text style={Style.item}>{item.name}</Text>
             <Text style={Style.details}>
               {item.clips == null ? 'No Clips!' : item.clips}

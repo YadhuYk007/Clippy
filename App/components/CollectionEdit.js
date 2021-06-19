@@ -1,21 +1,20 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, TextInput, Modal} from 'react-native';
-import {createCollection} from '../data/Databasehandler';
 import {openDatabase} from 'react-native-sqlite-storage';
 import color from '../constants/Colors';
+import {updateCollection} from '../data/Databasehandler';
 
-const CollectionDialog = ({modalVisible, visible}) => {
+const CollectionEdit = ({modalVisible, visible, id, name}) => {
   var db = openDatabase({name: 'clippyData.db'});
-  const [name, setName] = useState(null);
+  const [collectionName, setCollectionName] = useState(name);
 
   const addCollection = () => {
-    createCollection({db}, name);
+    updateCollection({db}, id, collectionName);
     visible();
-    setName('');
+    setCollectionName('');
   };
   const onCancel = () => {
     visible();
-    setName('');
   };
 
   return (
@@ -29,8 +28,8 @@ const CollectionDialog = ({modalVisible, visible}) => {
 
             <TextInput
               style={Style.input}
-              onChangeText={setName}
-              value={name}
+              onChangeText={setCollectionName}
+              value={collectionName}
             />
 
             <View style={Style.dialogFooter}>
@@ -39,7 +38,7 @@ const CollectionDialog = ({modalVisible, visible}) => {
               </Text>
 
               <Text style={Style.create} onPress={() => addCollection()}>
-                Create
+                Update
               </Text>
             </View>
           </View>
@@ -117,4 +116,4 @@ const Style = StyleSheet.create({
   },
 });
 
-export default CollectionDialog;
+export default CollectionEdit;

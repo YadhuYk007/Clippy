@@ -20,7 +20,7 @@ import ClipOptionsModal from '../components/ClipOptionsModal';
 import ClipEdit from '../components/ClipEdit';
 import NavHeader from '../components/NavHeader';
 import {deleteCollection} from '../data/Databasehandler';
-
+import CollectionEdit from '../components/CollectionEdit';
 const CollectionDetails = ({route, navigation}) => {
   const [bottomModal, setBottomModal] = useState(false);
   const [id, setId] = useState(route.params.id);
@@ -78,6 +78,7 @@ const CollectionDetails = ({route, navigation}) => {
   }, [navigation]);
 
   const onCollectionEdit = () => {
+    setModalVisible(true);
     return null;
   };
 
@@ -230,6 +231,14 @@ const CollectionDetails = ({route, navigation}) => {
           setEditClip(true);
           //editClip();
         }}
+      />
+      <CollectionEdit
+        modalVisible={modalVisible}
+        visible={() => {
+          setModalVisible(false);
+        }}
+        id={id}
+        name={route.params.name}
       />
     </View>
   );

@@ -42,10 +42,10 @@ const LandingScreen = ({navigation}) => {
       <StatusBar backgroundColor={color.Primary} />
 
       <CollectionList
-        addClip={cId => {
+        addClip={(cId, cName) => {
           console.log('Collection ID>>', cId);
           setClipModalVisible(false);
-          navigation.navigate('Details', {id: cId});
+          navigation.navigate('Details', {id: cId, name: cName});
         }}
         modal={modalVisible}
       />

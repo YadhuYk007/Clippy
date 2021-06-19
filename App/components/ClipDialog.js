@@ -20,9 +20,6 @@ const ClipDialog = ({clipModalVisible, onCancel, visible, modal}) => {
   const [value, setValue] = useState(null);
   const [dropdown, setDropdown] = useState([]);
   const [url, setUrl] = useState(null);
-  const [image, setImage] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [details, setDetails] = useState([]);
 
   var db = openDatabase({name: 'clippyData.db'});
 

@@ -8,9 +8,7 @@ import color from '../constants/Colors';
 const MainStack = createStackNavigator();
 const Navigator = () => (
   <NavigationContainer>
-    <MainStack.Navigator
-    // initialRouteName={screenNames.CollectionList}
-    >
+    <MainStack.Navigator>
       <MainStack.Screen
         name={'Collections'}
         component={LandingScreen}
