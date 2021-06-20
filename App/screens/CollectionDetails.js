@@ -179,13 +179,7 @@ const CollectionDetails = ({route, navigation}) => {
         keyExtractor={item => item.id}
         ItemSeparatorComponent={Separator}
       />
-      {/* <View>
-        <TouchableOpacity
-          style={Style.fab}
-          onPress={() => setBottomModal(true)}>
-          <Text style={{color: color.White, fontSize: 30}}>+</Text>
-        </TouchableOpacity>
-      </View> */}
+
       <CollectionDialog
         modalVisible={modalVisible}
         visible={() => {
