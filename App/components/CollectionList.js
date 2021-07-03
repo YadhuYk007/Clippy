@@ -5,7 +5,7 @@ import {openDatabase} from 'react-native-sqlite-storage';
 import color from '../constants/Colors';
 const CollectionList = ({addClip, modal}) => {
   const [items, setItems] = useState([]);
-  let title = 'No Clips!';
+
   var db = openDatabase({name: 'clippyData.db'});
 
   useEffect(() => {

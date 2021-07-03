@@ -132,7 +132,7 @@ const Style = StyleSheet.create({
     width: '100%',
     height: '62%',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: color.shadowColor,
     shadowOffset: {
       width: 0,
       height: 2,

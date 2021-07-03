@@ -6,11 +6,16 @@ import CollectionDetails from '../screens/CollectionDetails';
 import color from '../constants/Colors';
 
 const MainStack = createStackNavigator();
+
+const screenNames = {
+  Home: 'Collections',
+  Details: 'Details',
+};
 const Navigator = () => (
   <NavigationContainer>
     <MainStack.Navigator>
       <MainStack.Screen
-        name={'Collections'}
+        name={screenNames.Home}
         component={LandingScreen}
         options={{
           title: 'Clippy',
@@ -26,7 +31,7 @@ const Navigator = () => (
       />
 
       <MainStack.Screen
-        name={'Details'}
+        name={screenNames.Details}
         component={CollectionDetails}
         options={{
           title: 'Clippy',

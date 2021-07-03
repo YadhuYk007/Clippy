@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {getLinkPreview, getPreviewFromContent} from 'link-preview-js';
+import {getLinkPreview} from 'link-preview-js';
 import {openDatabase} from 'react-native-sqlite-storage';
 import {
   Modal,
@@ -14,7 +14,7 @@ import color from '../constants/Colors';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {addClip} from '../data/Databasehandler';
 
-const ClipDialog = ({clipModalVisible, onCancel, visible, modal}) => {
+const ClipDialog = ({clipModalVisible, visible, modal}) => {
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -125,7 +125,7 @@ const Style = StyleSheet.create({
     width: '100%',
     height: '62%',
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: color.shadowColor,
     shadowOffset: {
       width: 0,
       height: 2,

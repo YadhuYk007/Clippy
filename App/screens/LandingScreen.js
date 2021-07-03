@@ -6,7 +6,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Modal,
 } from 'react-native';
 import color from '../constants/Colors';
 import {openDatabase} from 'react-native-sqlite-storage';
@@ -14,7 +13,7 @@ import CollectionList from '../components/CollectionList';
 import CollectionDialog from '../components/CollectionDialog';
 import ClipDialog from '../components/ClipDialog';
 import BottomModal from '../components/BottomModal';
-import SplashScreen from 'react-native-splash-screen';
+import Icon from 'react-native-remix-icon';
 
 const LandingScreen = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,7 +26,6 @@ const LandingScreen = ({navigation}) => {
     items.length > 0 ? setBottomModal(true) : setModalVisible(true);
   };
   useEffect(() => {
-    SplashScreen.hide();
     db.transaction(tx => {
       tx.executeSql('SELECT * FROM collections', [], (tx, results) => {
         var temp = [];
@@ -43,7 +41,6 @@ const LandingScreen = ({navigation}) => {
 
       <CollectionList
         addClip={(cId, cName) => {
-          console.log('Collection ID>>', cId);
           setClipModalVisible(false);
           navigation.navigate('Details', {id: cId, name: cName});
         }}
@@ -78,7 +75,7 @@ const LandingScreen = ({navigation}) => {
 
       <View>
         <TouchableOpacity style={Style.fab} onPress={() => setModal()}>
-          <Text style={{color: color.White, fontSize: 30}}>+</Text>
+          <Icon name="ri-add-fill" size={24} color={color.White} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

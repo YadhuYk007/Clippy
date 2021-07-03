@@ -5,4 +5,5 @@ export default {
   White: '#FFFFFF',
   Black: '#261C1C',
   LightGrey: '#EEEEEE',
+  shadowColor: '#000',
 };

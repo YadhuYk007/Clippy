@@ -23,7 +23,7 @@ import {deleteCollection} from '../data/Databasehandler';
 import CollectionEdit from '../components/CollectionEdit';
 const CollectionDetails = ({route, navigation}) => {
   const [bottomModal, setBottomModal] = useState(false);
-  const [id, setId] = useState(route.params.id);
+  const id = route.params.id;
   const [items, setItems] = useState(null);
   const [readItems, setReadItems] = useState(null);
   const [currentItem, setCurrentItem] = useState(null);
@@ -110,7 +110,7 @@ const CollectionDetails = ({route, navigation}) => {
   };
 
   return (
-    <View>
+    <View style={Style.main}>
       <FlatList
         data={items}
         renderItem={({item}) => (
@@ -121,7 +121,6 @@ const CollectionDetails = ({route, navigation}) => {
             }}
             onLongPress={() => {
               setCurrentUrl(item.url);
-
               setOptionsModalVisible();
               setCurrentItem(item.id);
             }}>
@@ -179,6 +178,12 @@ const CollectionDetails = ({route, navigation}) => {
         keyExtractor={item => item.id}
         ItemSeparatorComponent={Separator}
       />
+      <TouchableOpacity
+        style={Style.fabView}
+        style={Style.fab}
+        onPress={() => setBottomModal(true)}>
+        <Text style={{color: color.White, fontSize: 30}}>+</Text>
+      </TouchableOpacity>
 
       <CollectionDialog
         modalVisible={modalVisible}
@@ -223,7 +228,6 @@ const CollectionDetails = ({route, navigation}) => {
         }}
         onEdit={() => {
           setEditClip(true);
-          //editClip();
         }}
       />
       <CollectionEdit
@@ -239,9 +243,8 @@ const CollectionDetails = ({route, navigation}) => {
 };
 const Style = StyleSheet.create({
   list: {
-    flex: 4,
     flexDirection: 'row',
-    flex: 1,
+    alignSelf: 'flex-start',
   },
   item: {
     margin: 5,
@@ -261,6 +264,10 @@ const Style = StyleSheet.create({
     bottom: 10,
     right: 10,
   },
+  fabView: {
+    justifyContent: 'center',
+    backgroundColor: color.Accent,
+  },
   emptyView: {
     alignSelf: 'center',
     marginTop: '80%',
@@ -276,7 +283,9 @@ const Style = StyleSheet.create({
   rowItem: {
     flexDirection: 'row',
   },
-  main: {flex: 1},
+  main: {
+    backgroundColor: color.Primary,
+  },
   headerText: {
     alignSelf: 'center',
     fontFamily: 'IBMPlexSerif-Italic',
