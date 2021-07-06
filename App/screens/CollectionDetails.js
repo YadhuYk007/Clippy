@@ -98,7 +98,30 @@ const CollectionDetails = ({route, navigation}) => {
       },
     ]);
   };
-
+  const render = ({item}) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          setCurrentUrl(item.url);
+          openUrl(item.url);
+        }}
+        onLongPress={() => {
+          setCurrentUrl(item.url);
+          setOptionsModalVisible();
+          setCurrentItem(item.id);
+        }}>
+        <View style={Style.rowItem}>
+          <Image
+            style={Style.tinyLogo}
+            source={{
+              uri: item.imgurl,
+            }}
+          />
+          <Text style={Style.item}>{item.header}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   const openUrl = url => {
     Linking.canOpenURL(url).then(supported => {
       supported ? Linking.openURL(url) : alert('invalid URL');
@@ -113,28 +136,7 @@ const CollectionDetails = ({route, navigation}) => {
     <View style={Style.main}>
       <FlatList
         data={items}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            onPress={() => {
-              setCurrentUrl(item.url);
-              openUrl(item.url);
-            }}
-            onLongPress={() => {
-              setCurrentUrl(item.url);
-              setOptionsModalVisible();
-              setCurrentItem(item.id);
-            }}>
-            <View style={Style.rowItem}>
-              <Image
-                style={Style.tinyLogo}
-                source={{
-                  uri: item.imgurl,
-                }}
-              />
-              <Text style={Style.item}>{item.header}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
+        renderItem={({item}) => render({item})}
         keyExtractor={item => item.id}
         ItemSeparatorComponent={Separator}
         ListEmptyComponent={
@@ -178,12 +180,6 @@ const CollectionDetails = ({route, navigation}) => {
         keyExtractor={item => item.id}
         ItemSeparatorComponent={Separator}
       />
-      <TouchableOpacity
-        style={Style.fabView}
-        style={Style.fab}
-        onPress={() => setBottomModal(true)}>
-        <Text style={{color: color.White, fontSize: 30}}>+</Text>
-      </TouchableOpacity>
 
       <CollectionDialog
         modalVisible={modalVisible}
@@ -284,7 +280,7 @@ const Style = StyleSheet.create({
     flexDirection: 'row',
   },
   main: {
-    backgroundColor: color.Primary,
+    backgroundColor: color.White,
   },
   headerText: {
     alignSelf: 'center',
